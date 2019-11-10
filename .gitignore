@@ -1,7 +1,6 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
 !**/src/test/**
 
 ### STS ###
@@ -32,6 +31,3 @@ build/
 
 ### Compiled Class Files ###
 *.class
-
-### Application Properties ###
-application.properties

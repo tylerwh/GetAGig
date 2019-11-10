@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View All Venues</title>
+</head>
+<body>
+<form>
+<table>
+<tr th:each="currentVenue : ${venues}" >
+<td th:text="${currentVenue.id}" />
+ <td th:text="${currentVenue.name}" />
+ <td th:text="${currentVenue.capacity}" />
+ <td th:text="${currentVenue.owner}" />
+ <td><a
+th:href="@{/editVenue/{id}(id=${currentVenue.id})}">Edit</a></td>
+ <td><a
+th:href="@{/deleteVenue/{id}(id=${currentVenue.id})}">Delete</a></td>
+</tr>
+</table>
+</form>
+<a href="../inputVenue">Add a new Venue</a><br>
+<a href="../index.html">Go Home</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Update Band</title>
+</head>
+<body>
+<form action="#" th:action="@{/updateVenue/{id}(id=${venue.id})}"
+th:object="${venue}" method="post">
+ <label for="name">Name</label>
+ <input type="text" th:field="*{name}" id="name"
+placeholder="Name">
+ <span th:if="${#fields.hasErrors('name')}"
+th:errors="*{name}"></span>
+
+ <label for="capacity">Capacity</label>
+ <input type="text" th:field="*{capacity}" id="capacity"
+placeholder="Capacity">
+ <span th:if="${#fields.hasErrors('capacity')}"
+th:errors="capacity"></span>
+
+ <label for="owner">Owner</label>
+ <input type="text" th:field="*{owner}" id="owner"
+placeholder="Owner">
+ <span th:if="${#fields.hasErrors('owner')}"
+th:errors="*{owner}"></span>
+ <input type="submit" value="Update Venue">
+</form>
+<br>
+<a href="index.html">Go Home</a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert New Venue</title>
+</head>
+<body>
+<form name='f' th:object="${newVenue}" th:action="@{/inputVenue}"
+method='POST'>
+Name: <input name="name" size="30"> <br />
+Capacity: <input name="capacity" size="30"><br />
+Owner: <input name="owner" size="30"><br />
+<input name="submit" type="submit" value="submit" />
+</form>
+<a href="viewAllVenues">View all Venues</a><br>
+<a href="index.html">Go Home</a>
+</body>
+</html>
