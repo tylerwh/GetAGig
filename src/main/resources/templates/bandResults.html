@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View All Bands</title>
+</head>
+<body>
+<form>
+<table>
+<tr th:each="currentBand : ${bands}" >
+<td th:text="${currentBand.id}" />
+ <td th:text="${currentBand.name}" />
+ <td th:text="${currentBand.genre}" />
+ <td th:text="${currentBand.manager}" />
+ <td><a
+th:href="@{/editBand/{id}(id=${currentBand.id})}">Edit</a></td>
+ <td><a
+th:href="@{/deleteBand/{id}(id=${currentBand.id})}">Delete</a></td>
+</tr>
+</table>
+</form>
+<a href="../inputBand">Add a new Band</a><br>
+<a href="../index.html">Go Home</a>
+</body>
+</html>
