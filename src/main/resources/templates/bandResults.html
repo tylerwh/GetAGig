@@ -3,12 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>View All Bands</title>
+<style>
+table, th {text-align: left;
+}
+</style>
+
 </head>
 <body>
 <form>
-<table>
+<h3>The Bands!</h3>
+
+<table style="width:50%">
+<tr>
+<th>- Band -</th>
+<th>- Genre -</th>
+<th>- Manager Name -</th>
+</tr>
+
 <tr th:each="currentBand : ${bands}" >
-<td th:text="${currentBand.id}" />
  <td th:text="${currentBand.name}" />
  <td th:text="${currentBand.genre}" />
  <td th:text="${currentBand.manager}" />
