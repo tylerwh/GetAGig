@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Gig {
@@ -23,24 +26,25 @@ public class Gig {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private LocalDateTime eventDateTime;
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(
 			name="venue_gigs",
 			joinColumns={@JoinColumn(name="venue_id",
 			referencedColumnName="id") },
-			inverseJoinColumns={ @JoinColumn(name="gig_id",
+			inverseJoinColumns={@JoinColumn(name="gig_id",
 			referencedColumnName="id", unique=true) }
 	)
-	private Venue venue;
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<Venue> venue;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(
 			name="band_gigs",
 			joinColumns={@JoinColumn(name="band_id",
 			referencedColumnName="id") },
 			inverseJoinColumns={ @JoinColumn(name="gig_id",
-			referencedColumnName="id", unique=true) }
+			referencedColumnName="id", unique=true, nullable=true) }
 	)
-	private Band band;
+	private Set<Band>bandGigs;
 	//@ManyToOne(targetEntity=Band.class, fetch=FetchType.EAGER)
 	//private Band headliner;
 	
@@ -48,19 +52,19 @@ public class Gig {
 		super();
 	}
 	
-	public Gig(String eventDateTime, Venue venue) {
+	public Gig(String eventDateTime, Set<Venue> venue) {
 		super();
 		LocalDateTime eventDT = LocalDateTime.parse(eventDateTime, DateTimeFormatter.ISO_DATE_TIME);
 		this.eventDateTime = eventDT;
 		this.venue = venue;
 	}
 	
-	public Gig(String eventDateTime, Venue venue, Band opener) {
+	public Gig(String eventDateTime, Set<Venue> venue, Set<Band> opener) {
 		super();
 		LocalDateTime eventDT = LocalDateTime.parse(eventDateTime, DateTimeFormatter.ISO_DATE_TIME);
 		this.eventDateTime = eventDT;
 		this.venue = venue;
-		this.band = opener;
+		this.bandGigs = opener;
 		//this.headliner = headliner;
 	}
 	
@@ -80,20 +84,20 @@ public class Gig {
 		this.eventDateTime = eventDT;
 	}
 
-	public Venue getVenue() {
+	public Set<Venue> venue() {
 		return venue;
 	}
 	
-	public void setVenue(Venue venue) {
+	public void setVenue(Set<Venue> venue) {
 		this.venue = venue;
 	}
 
-	public Band getBand() {
-		return band;
+	public Set<Band> band() {
+		return bandGigs;
 	}
 	
-	public void setBand(Band opener) {
-		this.band = opener;
+	public void setBand(Set<Band> band) {
+		this.bandGigs = band;
 	}
 /*
 	public Band getHeadliner() {
@@ -106,7 +110,7 @@ public class Gig {
 	*/
 	@Override
 	public String toString() {
-		return "Gig [id=" + id + "eventDateTime=" + eventDateTime + "venue=" + venue.toString() + ", band=" + band.toString() + ", headliner= + headliner.toString() + ]";
+		return "Gig [id=" + id + "eventDateTime=" + eventDateTime + "venue=" + venue.toString() + ", band=" + bandGigs.toString() + ", headliner= + headliner.toString() + ]";
 	}
 	
 }

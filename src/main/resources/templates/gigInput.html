@@ -13,7 +13,7 @@ Gig Date/Time: <input type="datetime-local" id="eventDateTime"
 Venue: <select name="venue" required="required">
 		 <option th:each="venue: ${venues}" th:value="${venue.id}" th:text="${venue.name}">
 		</select><br>
-Opener: <select name="band">
+Opener: <br/><select name="band" multiple size="6">
 		 <option th:each="band: ${bands}" th:value="${band.id}" th:text="${band.name}">
 		</select><br>
 <!--Headliner: <select name="headliner">
