@@ -35,5 +35,9 @@ th:href="@{/deleteVenue/{id}(id=${currentVenue.id})}">Delete</a></td>
 </form>
 <a href="../inputVenue">Add a new Venue</a><br>
 <a href="../index.html">Go Home</a>
+
+<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
 </body>
 </html>

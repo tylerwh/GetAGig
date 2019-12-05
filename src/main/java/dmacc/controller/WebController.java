@@ -142,13 +142,15 @@ public class WebController {
 	public String addNewGig(@ModelAttribute Gig g, Model model) {
 		gigRepo.save(g);
 		model.addAttribute("gigs", gigRepo.findAll());
+		model.addAttribute("venues", venueRepo.findAll());
+		model.addAttribute("bands", bandRepo.findAll());
 		return "gigResults";
 	}
 	
 	@GetMapping("/editGig/{id}")
 	public String showGigUpdateForm(@PathVariable("id") long id, Model model) {
 		Gig g = gigRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid gig Id:" + id));
-		model.addAttribute("gig", g);
+		model.addAttribute("gigs", g);
 		return "gigUpdate";
 	}
 	
