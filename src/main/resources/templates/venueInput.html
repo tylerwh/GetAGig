@@ -14,5 +14,9 @@ Owner: <input name="owner" size="30"><br />
 </form>
 <a href="viewAllVenues">View all Venues</a><br>
 <a href="index.html">Go Home</a>
+
+<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
 </body>
 </html>
