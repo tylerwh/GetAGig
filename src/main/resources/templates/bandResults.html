@@ -33,5 +33,10 @@ th:href="@{/deleteBand/{id}(id=${currentBand.id})}">Delete</a></td>
 </form>
 <a href="../inputBand">Add a new Band</a><br>
 <a href="../index.html">Go Home</a>
+
+
+ <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
 </body>
 </html>

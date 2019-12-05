@@ -7,24 +7,31 @@
 <body>
 <form action="#" th:action="@{/updateGig/{id}(id=${gig.id})}"
 th:object="${gig}" method="post">
- <label for="name">Name</label>
- <input type="text" th:field="*{name}" id="name"
-placeholder="Name">
- <span th:if="${#fields.hasErrors('name')}"
-th:errors="*{name}"></span>
 
- <label for="genre">Genre</label>
- <input type="text" th:field="*{genre}" id="genre"
-placeholder="Genre">
- <span th:if="${#fields.hasErrors('genre')}"
-th:errors="genre"></span>
+ 
 
- <label for="manager">Manager</label>
- <input type="text" th:field="*{manager}" id="manager"
-placeholder="Manager">
- <span th:if="${#fields.hasErrors('manager')}"
-th:errors="*{manager}"></span>
+ <label for="eventDateTime">Time</label>
+ <input type="datetime-local" id="eventDateTime"
+placeholder="eventDateTime" min="2019-11-20T00:00" max="2020-12-31T00:00" required="required">
+ <span th:if="${#fields.hasErrors('eventDateTime')}"
+th:errors="eventDateTime"></span>
+
+ <label for="venueGigs">Venue</label>
+ <input type="text" th:field="*{venueGigs}" id="venueGigs"
+placeholder="venueGigs">
+ <span th:if="${#fields.hasErrors('venueGigs')}"
+th:errors="*{venueGigs}"></span>
+
+<label for="opener">Bands</label>
+ <input type="text" th:field="*{opener}" id="opener"
+placeholder="opener">
+ <span th:if="${#fields.hasErrors('opener')}"
+th:errors="*{opener}"></span>
+
  <input type="submit" value="Update Gig">
+ 
+ 
+ 
 </form>
 <br>
 <a href="index.html">Go Home</a>

@@ -9,8 +9,8 @@
 method='POST'>
 Gig Date/Time: <input type="datetime-local" id="eventDateTime"
        name="eventDateTime" value="2019-11-30T19:30"
-       min="2019-11-20T00:00" max="2020-12-31T00:00" required="required">
-Venue: <select name="venue" required="required">
+       min="2019-11-20T00:00" max="2020-12-31T00:00" required="required"><br/>
+Venue: <br/><select name="venue" multiple size = "6" required="required">
 		 <option th:each="venue: ${venues}" th:value="${venue.id}" th:text="${venue.name}">
 		</select><br>
 Opener: <br/><select name="band" multiple size="6">
@@ -23,5 +23,9 @@ Opener: <br/><select name="band" multiple size="6">
 </form>
 <a href="viewAllGigs">View all Gigs</a><br>
 <a href="index.html">Go Home</a>
+
+<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
 </body>
 </html>

@@ -23,9 +23,9 @@ table, th {text-align: left;
 
 <tr th:each="currentGig : ${gigs}" >
  <td th:text="${currentGig.eventDateTime}" />
- <td th:text="${currentGig.venue}" />
+ <td th:text="${currentGig.venueGigs}" />
  <td th:text="${currentGig.opener}" />
- <td th:text="${currentGig.headliner}" />
+
  <td><a
 th:href="@{/editGig/{id}(id=${currentGig.id})}">Edit</a></td>
  <td><a
@@ -35,5 +35,9 @@ th:href="@{/deleteGig/{id}(id=${currentGig.id})}">Delete</a></td>
 </form>
 <a href="../inputGig">Add a new Gig</a><br>
 <a href="../index.html">Go Home</a>
+
+<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
 </body>
 </html>

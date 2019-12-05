@@ -20,11 +20,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Gig {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime eventDateTime;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(
@@ -34,7 +37,7 @@ public class Gig {
 			inverseJoinColumns={@JoinColumn(name="gig_id",
 			referencedColumnName="id", unique=true) }
 	)
-	private Set<Venue> venue;
+	private Set<Venue> venueGigs;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(
@@ -42,9 +45,9 @@ public class Gig {
 			joinColumns={@JoinColumn(name="band_id",
 			referencedColumnName="id") },
 			inverseJoinColumns={ @JoinColumn(name="gig_id",
-			referencedColumnName="id", unique=true, nullable=true) }
+			referencedColumnName="id", unique=true) }
 	)
-	private Set<Band>bandGigs;
+	private Set<Band>opener;
 	//@ManyToOne(targetEntity=Band.class, fetch=FetchType.EAGER)
 	//private Band headliner;
 	
@@ -52,54 +55,59 @@ public class Gig {
 		super();
 	}
 	
-	public Gig(String eventDateTime, Set<Venue> venue) {
+	public Gig(String eventDateTime, Set<Venue> venueGigs) {
 		super();
 		LocalDateTime eventDT = LocalDateTime.parse(eventDateTime, DateTimeFormatter.ISO_DATE_TIME);
 		this.eventDateTime = eventDT;
-		this.venue = venue;
+		this.venueGigs = venueGigs;
 	}
 	
-	public Gig(String eventDateTime, Set<Venue> venue, Set<Band> opener) {
+	public Gig(String eventDateTime, Set<Venue> venueGigs, Set<Band> opener) {
 		super();
 		LocalDateTime eventDT = LocalDateTime.parse(eventDateTime, DateTimeFormatter.ISO_DATE_TIME);
 		this.eventDateTime = eventDT;
-		this.venue = venue;
-		this.bandGigs = opener;
+		this.venueGigs = venueGigs;
+		this.opener = opener;
 		//this.headliner = headliner;
 	}
 	
+	
+
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public LocalDateTime getEventDateTime() {
 		return eventDateTime;
 	}
-	public void setEventDateTime(String eventDateTime) {
-		LocalDateTime eventDT = LocalDateTime.parse(eventDateTime, DateTimeFormatter.ISO_DATE_TIME);
-		this.eventDateTime = eventDT;
+
+	public void setEventDateTime(LocalDateTime eventDateTime) {
+		this.eventDateTime = eventDateTime;
+		
 	}
 
-	public Set<Venue> venue() {
-		return venue;
-	}
-	
-	public void setVenue(Set<Venue> venue) {
-		this.venue = venue;
+	public Set<Venue> getVenueGigs() {
+		return venueGigs;
 	}
 
-	public Set<Band> band() {
-		return bandGigs;
+	public void setVenueGigs(Set<Venue> venueGigs) {
+		this.venueGigs = venueGigs;
 	}
-	
-	public void setBand(Set<Band> band) {
-		this.bandGigs = band;
+
+	public Set<Band> getOpener() {
+		return opener;
 	}
-/*
+
+	public void setOpener(Set<Band> opener) {
+		this.opener = opener;
+	}
+
+	/*
 	public Band getHeadliner() {
 		return headliner;
 	}
@@ -110,7 +118,7 @@ public class Gig {
 	*/
 	@Override
 	public String toString() {
-		return "Gig [id=" + id + "eventDateTime=" + eventDateTime + "venue=" + venue.toString() + ", band=" + bandGigs.toString() + ", headliner= + headliner.toString() + ]";
+		return "Gig [id=" + id + "eventDateTime=" + eventDateTime + "venue=" + venueGigs.toString() + ", band=" + opener.toString() + ", headliner= + headliner.toString() + ]";
 	}
 	
 }
