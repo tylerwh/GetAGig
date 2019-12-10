@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View All Gigs</title>
+<style>
+table, th {text-align: left;
+}
+</style>
+
+</head>
+<body>
+<form>
+<h3>The Gigs!</h3>
+
+<table style="width:50%">
+<tr>
+<th>- Date/Time -</th>
+<th>- Venue -</th>
+<th>- Opener -</th>
+<th>- Headliner -</th>
+</tr>
+
+<tr th:each="currentGig : ${gigs}" >
+ <td th:text="${currentGig.eventDateTime}" />
+ <td th:text="${currentGig.venueGigs}" />
+ <td th:text="${currentGig.opener}" />
+
+ <td><a
+th:href="@{/editGig/{id}(id=${currentGig.id})}">Edit</a></td>
+ <td><a
+th:href="@{/deleteGig/{id}(id=${currentGig.id})}">Delete</a></td>
+</tr>
+</table>
+</form>
+<a href="../inputGig">Add a new Gig</a><br>
+<a href="../index.html">Go Home</a>
+
+<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+</body>
+</html>

@@ -3,6 +3,7 @@ package dmacc.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import dmacc.beans.Band;
+import dmacc.beans.Gig;
 import dmacc.beans.Venue;
 import dmacc.repository.BandRepository;
+import dmacc.repository.GigRepository;
 import dmacc.repository.VenueRepository;
 
 @Controller
@@ -22,6 +25,8 @@ public class WebController {
 	BandRepository bandRepo;
 	@Autowired
 	VenueRepository venueRepo;
+	@Autowired
+	GigRepository gigRepo;
 	
 	@GetMapping("/viewAllBands")
 	public String viewAllBands(Model model) {
@@ -117,6 +122,57 @@ public class WebController {
 		return "venueResults";
 	}
 	
+	
+	@GetMapping("/viewAllGigs")
+	public String viewAllGigs(Model model) {
+		model.addAttribute("gigs", gigRepo.findAll());
+		return "gigResults";
+	}
+	
+	@GetMapping("/inputGig")
+	public String addNewGig(Model model) {
+		Gig g = new Gig();
+		model.addAttribute("newGig", g);
+		model.addAttribute("venues", venueRepo.findAll());
+		model.addAttribute("bands", bandRepo.findAll());
+		return "gigInput";
+	}
+	
+	@PostMapping("/inputGig")
+	public String addNewGig(@ModelAttribute Gig g, Model model) {
+		gigRepo.save(g);
+		model.addAttribute("gigs", gigRepo.findAll());
+		model.addAttribute("venues", venueRepo.findAll());
+		model.addAttribute("bands", bandRepo.findAll());
+		return "gigResults";
+	}
+	
+	@GetMapping("/editGig/{id}")
+	public String showGigUpdateForm(@PathVariable("id") long id, Model model) {
+		Gig g = gigRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid gig Id:" + id));
+		model.addAttribute("gigs", g);
+		return "gigUpdate";
+	}
+	
+	@PostMapping("/updateGig/{id}")
+	public String updateGig(@PathVariable("id") long id, @Valid Gig g, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			g.setId(id);
+			return "gigUpdate";
+		}
+		
+		gigRepo.save(g);
+		model.addAttribute("gigs", gigRepo.findAll());
+		return "gigResults";
+	}
+	
+	@GetMapping("/deleteGig/{id}")
+	public String deleteGig(@PathVariable("id") long id, Model model) {
+		Gig g = gigRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid gig Id:" + id));
+		gigRepo.delete(g);
+		model.addAttribute("gigs", gigRepo.findAll());
+		return "gigResults";
+	}
 }
 
 
